@@ -9,6 +9,7 @@ body {
   font-weight: 400;
   font-family: $font-fira;
   background-color: $white-2;
+  overflow-x: hidden;
 }
 
 ul,
@@ -72,6 +73,10 @@ img {
     font-size: 48px;
     line-height: 69.5px;
     text-transform: capitalize;
+    @include mobile {
+      font-size: 36px;
+      line-height: 40px;
+    }
   }
 
   .desc {
@@ -83,13 +88,22 @@ img {
 
 #header {
   backdrop-filter: blur(3px);
+  @include tablet {
+    backdrop-filter: unset;
+  }
   .header-wrapper {
     @include flex(space-between, center, 20px);
     padding: 20px 0;
+    .button {
+      @include mobile {
+        display: none;
+      }
+    }
   }
   .header-logo {
     width: 50px;
     display: inline-block;
+    min-width: 50px;
   }
   .header-nav {
     @include flex(unset, center, unset);
@@ -97,10 +111,32 @@ img {
   .header-link-list {
     @include flex(unset, center, 46px);
     margin-right: 60px;
+    transition: all ease-in-out 0.5s;
+    @include tablet {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      background-color: $pink;
+      justify-content: center;
+      transform: translateX(-100%);
+      z-index: 200;
+
+      &.active {
+        transform: translateX(0);
+      }
+    }
+
     .header-link-item {
       line-height: 24px;
       text-transform: capitalize;
       position: relative;
+      @include tablet {
+        font-size: 24px;
+        line-height: 28px;
+      }
       &:hover {
         &::before {
           width: 100%;
@@ -117,10 +153,30 @@ img {
         transition: all ease 0.75s;
       }
     }
+    .close-button {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 25px;
+      aspect-ratio: 1;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      display: none;
+      svg {
+        width: 100%;
+      }
+      @include tablet {
+        display: block;
+      }
+    }
   }
   .social-list {
     @include flex(unset, center, 8px);
     margin-right: 32px;
+    @include mobile {
+      margin-right: 0;
+    }
     .social-item {
       .image {
         display: block;
@@ -137,6 +193,16 @@ img {
       }
     }
   }
+  .menu-button {
+    display: none;
+    outline: none;
+    border: none;
+    margin-left: 30px;
+    width: 29px;
+    @include tablet {
+      display: block;
+    }
+  }
 }
 
 #banner {
@@ -147,8 +213,18 @@ img {
 
   .banner-wrapper {
     @include flex(space-between, center, 10px);
+    @include landscape-phone {
+      flex-direction: column;
+    }
   }
   .heading-block {
+    .badge {
+      @include landscape-phone {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+    }
     .title {
       font-family: $font-exo;
       font-size: 64px;
@@ -156,34 +232,68 @@ img {
       line-height: 76px;
       max-width: 604px;
       text-transform: uppercase;
+      @include landscape-phone {
+        text-align: center;
+        font-size: 54px;
+        line-height: 60px;
+      }
+      @include mobile {
+        font-size: 36px;
+        line-height: 40px;
+      }
     }
     .desc {
       max-width: 631px;
+      @include landscape-phone {
+        max-width: unset;
+        text-align: center;
+      }
     }
   }
   .banner-image {
     max-width: 500px;
     animation: floater ease-in-out 1s infinite alternate-reverse;
+    @include landscape-phone {
+      margin-top: 50px;
+    }
   }
 }
 
 #about {
+  @include landscape-phone {
+    margin-top: 100px;
+  }
   .about-wrapper {
     @include flex(space-between, center, 48px);
+    @include landscape-phone {
+      flex-direction: column-reverse;
+    }
   }
   .about-image {
     width: 50%;
+    @include landscape-phone {
+      width: 70%;
+    }
   }
 
   .about-content {
     width: 50%;
+    @include landscape-phone {
+      width: 100%;
+    }
     .heading-block {
       .title {
         margin-bottom: 16px;
+        @include landscape-phone {
+          text-align: center;
+        }
       }
     }
     .para {
       margin-bottom: 20px;
+      @include landscape-phone {
+        text-align: center;
+      }
     }
   }
 }
@@ -193,6 +303,14 @@ img {
   .roadmap-wrapper {
     @include flex(center, start, 40px);
     margin-top: 80px;
+    @include tablet {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    @include landscape-phone {
+      flex-direction: column;
+      align-items: center;
+    }
   }
   .heading-block {
     .title {
@@ -204,6 +322,12 @@ img {
     width: 100%;
     @include flex(unset, center, unset);
     flex-direction: column;
+    @include tablet {
+      flex: 0 0 40%;
+    }
+    @include landscape-phone {
+      flex: initial;
+    }
     &:nth-child(2) {
       .heading {
         background-image: url(../images/8.png);
@@ -273,6 +397,12 @@ img {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 40px;
     margin-top: 100px;
+    @include landscape-phone {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include mobile {
+      grid-template-columns: repeat(1, 1fr);
+    }
     .partner-item {
       width: 220px;
       height: 80px;
@@ -300,6 +430,9 @@ img {
   }
   .tokenomics-image {
     width: 100%;
+    @include tablet {
+      margin-top: 50px;
+    }
   }
 
   .tokenomics-content {
@@ -314,6 +447,9 @@ img {
       line-height: 26px;
       margin-bottom: 15px;
       font-family: $font-dela;
+      @include tablet {
+        font-size: 20px;
+      }
 
       q span {
         font-size: 20px;
@@ -341,9 +477,6 @@ img {
           color: #f7d567;
         }
         &:nth-child(4) {
-          color: #b73537;
-        }
-        &:nth-child(5) {
           color: $pink;
         }
       }
